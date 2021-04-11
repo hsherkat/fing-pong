@@ -44,6 +44,11 @@ class FingPong:
             self._draw()
         return
 
+    def _init_pygame(self):
+        pygame.init()
+        pygame.display.set_caption("Fing Pong")
+        return
+
     def _update_frame(self):
         img = get_webcam_img(self.camera)
         self.finger_coords = process_hands(img)
@@ -51,11 +56,6 @@ class FingPong:
             for fingertip_coords in finger_pair:
                 cv2.circle(img, fingertip_coords, 5, (255, 0, 255), cv2.FILLED)
         self.frame = img
-        return
-
-    def _init_pygame(self):
-        pygame.init()
-        pygame.display.set_caption("Fing Pong")
         return
 
     def _handle_input(self):

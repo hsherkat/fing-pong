@@ -26,6 +26,7 @@ def print_text_middle(surface, text, font, color=Color("tomato")):
     rect = text_surface.get_rect()
     rect.center = Vector2(surface.get_size()) / 2
     surface.blit(text_surface, rect)
+    return
 
 
 def print_text_bottom(surface, text, font, color=Color("tomato")):
@@ -34,6 +35,7 @@ def print_text_bottom(surface, text, font, color=Color("tomato")):
     x, y = Vector2(surface.get_size())
     rect.center = Vector2(int(x // 2), y - 30)
     surface.blit(text_surface, rect)
+    return
 
 
 def load_sound(name):
@@ -49,16 +51,8 @@ def random_velocity(lo, hi):
     return Vector2(r * cos(theta), r * sin(theta))
 
 
-def print_text_middle(surface, text, font, color=Color("tomato")):
-    text_surface = font.render(text, True, color)
-    rect = text_surface.get_rect()
-    rect.center = Vector2(surface.get_size()) / 2
-    surface.blit(text_surface, rect)
-    return
-
-
 def get_webcam_img(webcam):
-    """Reading frame from cv2.VideoCapture stream.
+    """Read frame from cv2.VideoCapture stream.
     """
     success = False
     while not success:
@@ -119,20 +113,3 @@ def bounce(v_in, v_floor):
     v_parallel = v_in.dot(v_floor) * v_floor
     v_perp = v_in - v_parallel
     return v_parallel - v_perp
-
-
-##############
-
-# def cv2_img_to_surface(img):
-#     if img.dtype.name == "uint16":
-#         img = (img / 256).astype("uint8")
-#     size = img.shape[1::-1]
-#     if len(img.shape) == 2:
-#         img = np.repeat(img.reshape(size[1], size[0], 1), 3, axis=2)
-#         format = "RGB"
-#     else:
-#         format = "RGBA" if img.shape[2] == 4 else "RGB"
-#         img[:, :, [0, 2]] = img[:, :, [2, 0]]
-#     flipped = cv2.flip(img, 1)
-#     surface = frombuffer(flipped.flatten(), size, format)
-#     return surface.convert_alpha() if format == "RGBA" else surface.convert()

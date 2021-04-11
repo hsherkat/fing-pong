@@ -5,7 +5,7 @@ from utils import load_sound, bounce
 
 
 class GameObject:
-    def __init__(self, position, sprite, velocity):
+    def __init__(self, position, sprite, velocity=0):
         self.position = Vector2(position)
         self.sprite = sprite
         self.radius = sprite.get_width() / 2
@@ -72,12 +72,12 @@ class Ball(GameObject):
             return
         for finger_pair in finger_coords:
             tip1, tip2 = map(Vector2, finger_pair)
-            if any(
+            if any(  # lerp gives line along tip1 to tip2
                 (tip1.lerp(tip2, frac).distance_to(self.position) < 25)
                 for frac in [0.1 * n for n in range(11)]
             ):
-                v_floor = Vector2(finger_pair[0]) - Vector2(finger_pair[1])
-                self.velocity = bounce(self.velocity, v_floor)
+                v_paddle = Vector2(finger_pair[0]) - Vector2(finger_pair[1])
+                self.velocity = bounce(self.velocity, v_paddle)
                 self.click_sound.play()
                 self.bounces += 1
                 self.clipping = 10
