@@ -55,6 +55,7 @@ class FingPong:
         for finger_pair in self.finger_coords:  # no. of pairs = no. of hands detected
             for fingertip_coords in finger_pair:
                 cv2.circle(img, fingertip_coords, 5, (255, 0, 255), cv2.FILLED)
+            cv2.line(img, finger_pair[0], finger_pair[1], (222, 22, 222), 2)
         self.frame = img
         return
 
