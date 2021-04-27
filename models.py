@@ -4,6 +4,9 @@ from pygame.transform import rotozoom
 from utils import load_sound, bounce
 
 
+SCREEN_RES = (1280, 720)
+
+
 class GameObject:
     def __init__(self, position, sprite, velocity=0):
         self.position = Vector2(position)
@@ -49,11 +52,11 @@ class Ball(GameObject):
 
     def is_oob_vertical(self):
         x, y = self.position
-        return y <= 0 or y >= 720
+        return y <= 0 or y >= SCREEN_RES[1]
 
     def is_oob_horizontal(self):
         x, y = self.position
-        return x <= 0 or x >= 1280
+        return x <= 0 or x >= SCREEN_RES[0]
 
     ####
 
@@ -61,9 +64,9 @@ class Ball(GameObject):
         if self.is_oob_vertical():
             self.reflect_v_vertical()
             self.click_sound.play()
-        if self.is_oob_horizontal():  # get rid of for loss condition
-            self.reflect_v_horizontal()
-            self.click_sound.play()
+        # if self.is_oob_horizontal(): # can experiment w/o losing by uncommenting
+        #     self.reflect_v_horizontal()
+        #     self.click_sound.play()
         return
 
     def handle_paddle_collision(self, finger_coords):

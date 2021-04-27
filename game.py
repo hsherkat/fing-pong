@@ -31,8 +31,8 @@ class FingPong:
             Vector2(SCREEN_RES) / 2, load_sprite("ball"), random_velocity(15, 30)
         )
         self.camera = cv2.VideoCapture(0)
-        self.camera.set(3, 1280)
-        self.camera.set(4, 720)
+        self.camera.set(3, SCREEN_RES[0])
+        self.camera.set(4, SCREEN_RES[1])
         self.frame = None
         self.finger_coords = []
 
@@ -68,6 +68,12 @@ class FingPong:
                 self.camera.release()
                 cv2.destroyAllWindows()
                 sys.exit()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.ball = Ball(
+                    Vector2(SCREEN_RES) / 2,
+                    load_sprite("ball"),
+                    random_velocity(15, 30),
+                )
         return
 
     def _process_game_logic(self):
@@ -75,8 +81,10 @@ class FingPong:
         self.ball.handle_wall_collision()
         self.ball.handle_paddle_collision(self.finger_coords)
         self.message = f"{self.ball.bounces} bounces"
-        # if self.ball.out_of_bounds_horizontal():
-        #     self.message = f"You lost! {self.ball.bounces} bounces"
+        if self.ball.is_oob_horizontal():
+            self.message = (
+                f"You lost! Score: {self.ball.bounces} bounces. SPACE to restart."
+            )
         return
 
     def _draw(self):
