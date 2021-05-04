@@ -33,7 +33,7 @@ class Ball(GameObject):
     def __init__(self, position, sprite, velocity):
         self.sprite = rotozoom(sprite, 0, 0.05)
         super().__init__(position, self.sprite, velocity)
-        self.click_sound = load_sound("click")
+        self.click_sound = load_sound("click_new2")
         self.bounces = 0
         self.clipping = 0
         return

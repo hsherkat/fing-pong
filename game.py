@@ -6,7 +6,6 @@ from pygame.math import Vector2
 
 from models import GameObject, Ball
 from utils import (
-    load_sound,
     load_sprite,
     random_velocity,
     print_text_middle,
